@@ -76,4 +76,9 @@ public class Board {
 	public int getNumCols() {
 		return numCols;
 	}
+	
+	public boolean isWall(int row, int col) {
+	    return isWall[row][col];
+	}
+	
 }

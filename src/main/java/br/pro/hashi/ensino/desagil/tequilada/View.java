@@ -61,6 +61,15 @@ public class View extends JPanel {
 		// Pinta um retângulo do tamanho da tela inteira.
 		g.fillRect(0, 0, model.getBoard().getNumCols() * CELL_SIZE, model.getBoard().getNumRows() * CELL_SIZE);
 
+		for(int i = 0; i < model.getBoard().getNumRows(); i++){
+			for(int j = 0; j < model.getBoard().getNumCols(); j++){
+				if(model.getBoard().isWall(i, j) == true){
+					g.setColor(Color.BLACK);
+					g.fillRect(CELL_SIZE*j, CELL_SIZE*i, CELL_SIZE, CELL_SIZE);
+				}
+			}
+		}
+		
 		// Pinta as imagens dos jogadores.
 		drawImage(g, cpuPlayerImage, model.getCpuPlayer());
 		drawImage(g, humanPlayerImage, model.getHumanPlayer());
