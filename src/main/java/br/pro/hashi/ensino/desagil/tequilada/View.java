@@ -9,19 +9,20 @@ import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
-// Estrutura b√°sica de um componente Swing.
+// Estrutura b·sica de um componente Swing.
 public class View extends JPanel {
-	// Estrutura b√°sica de um componente Swing.
+	// Estrutura b·sica de um componente Swing.
 	private static final long serialVersionUID = 1L;
 
 
-	// Constante que define o tamanho de cada c√©lula do tabuleiro.
+	// Constante que define o tamanho de cada cÈlula do tabuleiro.
 	private static final int CELL_SIZE = 50;
 
 
 	private Model model;
 	private Image cpuPlayerImage;
 	private Image humanPlayerImage;
+	private Image targetImage;
 
 
 	public View(Model model) {
@@ -30,13 +31,15 @@ public class View extends JPanel {
 		cpuPlayerImage = loadImage("cpuPlayer");
 		humanPlayerImage = loadImage("humanPlayer");
 
+		targetImage = loadImage("target");
+
 		// Define o tamanho da componente, em pixels.
 		setPreferredSize(new Dimension(model.getBoard().getNumCols() * CELL_SIZE, model.getBoard().getNumRows() * CELL_SIZE));
 	}
 
 
-	// M√©todo para carregar uma imagem a partir de um nome de arquivo.
-	// N√£o √© necess√°rio entender todos os detalhes nesse momento.
+	// MÈtodo para carregar uma imagem a partir de um nome de arquivo.
+	// N„o È necess·rio entender todos os detalhes nesse momento.
 	private Image loadImage(String filename) {
 		URL url = getClass().getResource("/" + filename + ".png");
 		ImageIcon icon = new ImageIcon(url);
@@ -44,35 +47,37 @@ public class View extends JPanel {
 	}
 
 
-	// M√©todo para desenhar uma imagem a partir da posi√ß√£o de um jogador.
-	// N√£o √© necess√°rio entender todos os detalhes nesse momento.
-	private void drawImage(Graphics g, Image image, Player player) {
-		g.drawImage(image, player.getCol() * CELL_SIZE, player.getRow() * CELL_SIZE, CELL_SIZE, CELL_SIZE, null);
+	// MÈtodo para desenhar uma imagem a partir da posiÁ„o de um jogador.
+	// N„o È necess·rio entender todos os detalhes nesse momento.
+	private void drawImage(Graphics g, Image image, Element element) {
+		g.drawImage(image, element.getCol() * CELL_SIZE, element.getRow() * CELL_SIZE, CELL_SIZE, CELL_SIZE, null);
 	}
 
 
-	// M√©todo para desenhar a interface gr√°fica do jogo. A ideia √©
-	// que o par√¢metro g pode ser usado como o pincel de desenho.
+	// MÈtodo para desenhar a interface gr·fica do jogo. A ideia È
+	// que o par‚metro g pode ser usado como o pincel de desenho.
 	@Override
 	public void paintComponent(Graphics g) {
-		// Define a cor do pincel como branco.
-		g.setColor(Color.WHITE);
-
-		// Pinta um ret√¢ngulo do tamanho da tela inteira.
-		g.fillRect(0, 0, model.getBoard().getNumCols() * CELL_SIZE, model.getBoard().getNumRows() * CELL_SIZE);
-
-		for(int i = 0; i < model.getBoard().getNumRows(); i++){
-			for(int j = 0; j < model.getBoard().getNumCols(); j++){
-				if(model.getBoard().isWall(i, j) == true){
+		for(int i = 0; i < model.getBoard().getNumRows(); i++) {
+			for(int j = 0; j < model.getBoard().getNumCols(); j++) {
+				if(model.getBoard().isWall(i, j)) {
+					// Define a cor do pincel como preto.
 					g.setColor(Color.BLACK);
-					g.fillRect(CELL_SIZE*j, CELL_SIZE*i, CELL_SIZE, CELL_SIZE);
 				}
+				else {
+					// Define a cor do pincel como branco.
+					g.setColor(Color.WHITE);
+				}
+
+				// Pinta um ret‚ngulo na posiÁ„o e tamanho da cÈlula.
+				g.fillRect(j * CELL_SIZE, i * CELL_SIZE, CELL_SIZE, CELL_SIZE);
 			}
 		}
-		
-		// Pinta as imagens dos jogadores.
+
+		// Pinta as imagens dos elementos.
 		drawImage(g, cpuPlayerImage, model.getCpuPlayer());
 		drawImage(g, humanPlayerImage, model.getHumanPlayer());
+		drawImage(g, targetImage, model.getTarget());
 
 		// Evita bugs visuais em alguns sistemas operacionais.
 		getToolkit().sync();

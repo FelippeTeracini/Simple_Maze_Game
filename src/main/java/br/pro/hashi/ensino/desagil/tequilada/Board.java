@@ -70,15 +70,15 @@ public class Board {
 	}
 
 
+	public boolean isWall(int row, int col) {
+	    return isWall[row][col];
+	}
+
+
 	public int getNumRows() {
 		return numRows;
 	}
 	public int getNumCols() {
 		return numCols;
 	}
-	
-	public boolean isWall(int row, int col) {
-	    return isWall[row][col];
-	}
-	
 }

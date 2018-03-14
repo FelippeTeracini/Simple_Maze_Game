@@ -23,6 +23,9 @@ public class Tequilada {
             	// Constrói a janela.
             	JFrame frame = new JFrame();
 
+            	// Adiciona o controlador como observador do teclado.
+            	frame.addKeyListener(controller);
+
             	// Coloca a visão dentro da janela.
             	frame.setContentPane(view);
 
@@ -39,7 +42,7 @@ public class Tequilada {
             	frame.setVisible(true);
 
             	// Cria o relogio
-            	Timer timer = new Timer(1000, controller);
+            	Timer timer = new Timer(100, controller);
 
             	// Inicia o relogio
             	timer.start();
